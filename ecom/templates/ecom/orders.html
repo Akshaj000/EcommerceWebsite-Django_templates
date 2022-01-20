@@ -1,0 +1,37 @@
+{% extends 'ecom/base.html' %}
+
+{% block content %}
+
+<br>
+<div class="container">
+<h4 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-primary">Your cart</span>
+    <span class="badge bg-primary rounded-pill">3</span>
+ </h4>
+  <ul class="list-group mb-3">
+    <li class="list-group-item d-flex justify-content-between lh-sm">
+      <div>
+        <h6 class="my-0">Product name</h6>
+        <small class="text-muted">Brief description</small>
+      </div>
+      <span class="text-muted">$12</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between lh-sm">
+      <div>
+        <h6 class="my-0">Second product</h6>
+        <small class="text-muted">Brief description</small>
+      </div>
+      <span class="text-muted">$8</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between lh-sm">
+      <div>
+        <h6 class="my-0">Third item</h6>
+        <small class="text-muted">Brief description</small>
+      </div>
+      <span class="text-muted">$5</span>
+    </li>
+  </ul>
+  <a class="nav-link" href="{% url 'payment'%}"><button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Payment</button></a>
+</div>
+
+{% endblock content %}
