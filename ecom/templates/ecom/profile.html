@@ -1,1 +1,33 @@
 {% extends 'ecom/base.html' %}
+
+
+{% block content %}
+
+<br>
+<div class="container" style="padding:50px;">
+    <div class="card">
+        {% if customer.photo %}
+        <div class="top-container" style="padding:20px;"> <img src="{{customer.photo.url}}" class="img-fluid profile-image" width="70">
+        {% endif %}
+            <div class="container" style="padding:50px;">
+                <br>
+                <h5 class="name">{{customer.name}}</h5>
+                {% if customer.email %}
+                <p class="mail">email : {{ customer.email  }}</p>
+                {% endif %}
+                {% if customer.phone %}
+                <p class="mail">phone : {{ customer.phone  }}</p>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
+            <div class="dollar-div px-3">
+                <div class="round-div"><i class="fa fa-dollar dollar"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+

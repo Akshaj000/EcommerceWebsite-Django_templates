@@ -1,0 +1,90 @@
+.btn-large-view {
+    margin: 1px;
+    border-radius: 5px;
+    color: white;
+    border: #828583;
+    background-color: #909291c0;
+    background-image: linear-gradient(180deg, rgba(81, 255, 0, 0), rgba(13, 197, 68, 0.116));
+    cursor: pointer;
+}
+
+.btn-large-buy {
+    margin: 1px;
+    border-radius: 5px;
+    color: white;
+    border: #08c2f0;
+    background-color: #17a2b8;
+    background-image: linear-gradient(180deg, rgba(81, 255, 0, 0), rgba(13, 197, 68, 0.116));
+    cursor: pointer;
+}
+
+.btn-large-buy:hover {
+    background-color: #07c3e0;
+    border: #08c2f0;
+}
+
+.btn-large-view:hover {
+    background-color: #cacaca;
+    border: #5f6664;
+}
+
+.btn-small {
+    margin: 1px;
+    border-radius: 10%;
+    border: #828583;
+}
+
+.loginclose {
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 10px;
+    border: 2px solid #73ad2100;
+    margin: 11%;
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    color: azure;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.btnlog {
+    border-radius: 5px;
+    border: 2px solid #73ad2100;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.644);
+    background-color: #04aa6db2;
+    background-image: linear-gradient(180deg, rgba(81, 255, 0, 0), rgba(13, 197, 68, 0.116));
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btnlog:hover {
+    opacity: 0.8;
+}
+
+input[type=text],
+input[type=password] {
+    border-radius: 5px;
+    border: 2px solid #73ad2100;
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-color: #010a0742;
+    color: whitesmoke;
+    font-size: medium;
+    background-color: rgba(4, 161, 82, 0);
+}
+
+input[type=text]:hover,
+input[type=password]:hover {
+    background-color: rgba(15, 27, 21, 0.178);
+}

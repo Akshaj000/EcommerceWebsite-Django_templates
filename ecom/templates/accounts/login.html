@@ -1,0 +1,23 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+
+<div class="loginclose">
+<h1 class="head">Login!</h1>
+<div class ="body">
+<form method = "POST" action="{% url 'login' %}">
+    {% if error %}
+    <h2 style="color:orange;">{{ error }}</h2>
+    {% endif %}
+    {% csrf_token %}
+    username:
+    <input type="text" name="username" placeholder="Enter Username" name="uname" required />
+    Password:
+    <input type="password" name="password" placeholder="Enter Password" name="psw" required/>
+    <input class ="btnlog" type="submit" value= "Login" />
+</form>
+<a href="{% url 'signup'%}"><button class="btnlog">Sign up</button></a>
+</div>
+</div>
+
+
+{% endblock %}

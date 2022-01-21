@@ -1,1 +1,38 @@
 {% extends 'ecom/base.html' %}
+{% load  static %}
+{% block content %}
+
+<main role="main">
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+
+    {% for row in  products %}
+    <div class="row">
+      {% for products in row %}
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="select2-container--classic">
+          <img class="card-img-top" src="{{ products.image.url }}" style="max-height:200px; max-width:300px; width:auto; display: block; margin-left: auto; margin-right: auto; margin-top:10px" %>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ products.name }}</p>
+            <h5>{{ products.price }} INR</h5>
+            <br>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href="{% url 'productdetails' name=products.name %}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
+                <a href="{% url 'addtocart' pname=products.name %}"><button type="button" class="btn btn-sm btn-outline-info updatecart">Add to cart</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+        
+
+
+</main>
+{% endblock  %}

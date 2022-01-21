@@ -1,0 +1,26 @@
+{% extends 'ecom/base.html' %}
+{% load  static %}
+{% block content %}
+
+<br>
+<div class="container">
+<div class="card mb-4 box-shadow">
+    <div class="select2-container--classic">
+    <img class="card-img-top" src="{{ product.image.url }}" style="max-height:350px; width:auto; display: block; margin-left: auto; margin-right: auto; margin-top:10px" %>
+    </div>
+    <div class="card-body">
+      <h3 class="card-text">{{ product.name }}</h3>
+      <br>
+      <h2 class="card-text" style="color:green">{{ product.price }} INR</h2>
+      <br>
+      <p class ="card-text">{{ product.description }}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <a href="{% url 'addtocart' pname=product.name %}"><button type="button" class="btn btn-sm btn-outline-info">ADD TO CART</button></a>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+{% endblock  %}
