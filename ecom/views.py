@@ -10,7 +10,8 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib.auth import logout, update_session_auth_hash
 from django.utils import timezone
-
+from payments import get_payment_model, RedirectNeeded
+from django.template.response import TemplateResponse
 # Create your views here.
 
 #ECOM
@@ -194,9 +195,22 @@ def deleteproducts(request,pname):
 
 # PAYMENT
 
-def payment(request):
-    return render(request,'ecom/payment.html')
+# def payment(request):
+#     cust = Customer.objects.get(name=request.user)
+#     cart  = Cart.objects.filter(customer=cust)
+#     totalprice = 0;
+#     for i in cart:
+#         totalprice+=i.totalprice()
+#     return render(request,'ecom/payment.html',{"cart":cart,"totalprice":totalprice})
 
+
+def payment(request, payment_id):
+    payment = get_object_or_404(get_payment_model(), id = payment_id)
+    try:
+        form = payment.get_form(data=request.POST or None)
+    except RedirectNeeded as redirect_to:
+        return redirect(str(redirect_to))
+    return TemplateResponse(request, 'ecom/payment.html',{'form': form, 'payment': payment})
 
 # ACCOUNTS
 

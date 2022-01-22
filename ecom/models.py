@@ -3,6 +3,9 @@ from statistics import mode
 from unicodedata import category
 from django.db import models
 from django.conf import settings
+from decimal import Decimal
+from payments import PurchasedItem
+from payments.models import BasePayment
 
 # Create your models here.
 
@@ -68,3 +71,14 @@ class Order(models.Model):
             return str(self.cart.product.name)+"_"+str(self.cart.customer.name)
         except:
             return "Unknown"
+
+class Payment(BasePayment):
+
+    def get_failure_url(self):
+        return 'home'
+
+    def get_success_url(self):
+        return 'cart'
+
+    def get_purchased_items(self):
+        yield PurchasedItem(name='The Hound of the Baskervilles', sku='BSKV',quantity=9, price=Decimal(10), currency='USD')

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ecom.apps.EcomConfig',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,8 @@ STATIC_ROOT = 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
+
+PAYMENT_HOST = 'localhost:8000'
+PAYMENT_USES_SSL = False
+PAYMENT_MODEL = 'mypaymentapp.Payment'
+PAYMENT_VARIANTS = {'default': ('payments.dummy.DummyProvider', {})}

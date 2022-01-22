@@ -20,7 +20,7 @@ urlpatterns = [
     path('editprofile/',views.editprofile,name='editprofile'),
 
 
-    path('payment/',views.payment,name='payment'),
+    path('payment/<str:payment_id>/',views.payment,name='payment'),
 
     path('login/',views.login,name='login'),
     path('logout/',views.logout,name='logout'),
