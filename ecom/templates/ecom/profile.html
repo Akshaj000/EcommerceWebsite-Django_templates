@@ -4,19 +4,19 @@
 {% block content %}
 
 <br>
-<div class="container" style="padding:50px;">
+<div class="container" style="padding:20px;">
     <div class="card">
         {% if customer.photo %}
-        <div class="top-container" style="padding:20px;"> <img src="{{customer.photo.url}}" class="img-fluid profile-image" width="70">
+        <img id="profilepic" src="{{customer.photo.url}}" class="img-fluid profile-image" width="70">
         {% endif %}
             <div class="container" style="padding:50px;">
                 <br>
-                <h5 class="name">{{customer.name}}</h5>
+                <h5 class="name textp" >{{customer.name}}</h5>
                 {% if customer.email %}
-                <p class="mail">email : {{ customer.email  }}</p>
+                <p class="mail textp">email : {{ customer.email  }}</p>
                 {% endif %}
                 {% if customer.phone %}
-                <p class="mail">phone : {{ customer.phone  }}</p>
+                <p class="phone textp">phone : {{ customer.phone  }}</p>
                 {% endif %}
             </div>
 

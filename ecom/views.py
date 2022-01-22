@@ -8,7 +8,8 @@ from .models import*
 from .forms import*
 from django.contrib.auth.models import User
 from django.contrib import auth
-from django.contrib.auth import logout
+from django.contrib.auth import logout, update_session_auth_hash
+from django.utils import timezone
 
 # Create your views here.
 
@@ -116,11 +117,86 @@ def cart(request):
     else:
         return redirect('login')
 
+def addproducts(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            if request.method == "POST":
+                form = ProductForm(data=request.POST,files=request.FILES)
+                if form.is_valid():
+                    product = form.save(commit=False)
+                    product.date_created = timezone.now()
+                    product.save()
+                    product.category.set(form.cleaned_data.get("category"))
+                    form.save_m2m()
+                    return redirect('home')
+            else:
+                form = ProductForm()
+            return render(request, 'ecom/productform.html', {'form': form})
+
+        else:
+            return redirect('home')
+
+    else:
+        return redirect('login')
+
+def addcategory(request):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            if request.method == "POST":
+                form = CategoryForm(data=request.POST)
+                if form.is_valid():
+                    cat = form.save(commit=False)
+                    cat.save()
+                    return redirect('home')
+            else:
+                form = CategoryForm()
+            return render(request, 'ecom/categoryform.html', {'form': form})
+
+        else:
+            return redirect('home')
+
+    else:
+        return redirect('login')
+
+def editproducts(request,pname):
+    if request.user.is_authenticated:
+        if request.user.is_superuser:
+            product = get_object_or_404(Product, name=pname)
+            if request.method == "POST":
+                form = ProductForm(data=request.POST,files=request.FILES,instance=product)
+                if form.is_valid():
+                    product = form.save(commit=False)
+                    product.date_created = timezone.now()
+                    product.save()
+                    product.category.set(form.cleaned_data.get("category"))
+                    form.save_m2m()
+                    return redirect('productdetails', name=product.name)
+            
+            else:
+                form = ProductForm(instance=product)
+            return render(request, 'ecom/productform.html', {'form': form})
+
+        else:
+            return redirect('home')
+
+    else:
+        return redirect('login')
+
+def deleteproducts(request,pname):
+    products = Product.objects.get(name=pname)
+    try:
+        cart  = Cart.objects.get(product=products)
+        cart.delete()
+    except:
+        pass
+    products.delete()
+    return redirect('home')
 
 # PAYMENT
 
 def payment(request):
     return render(request,'ecom/payment.html')
+
 
 # ACCOUNTS
 
@@ -132,6 +208,25 @@ def profile(request):
 
     else:
         return redirect('login')
+
+def editprofile(request):
+    if request.user.is_authenticated:
+        customer = get_object_or_404(Customer, name=request.user)
+        if request.method == "POST":
+            form = CustomerForm(data=request.POST,files=request.FILES,instance=customer)
+            if form.is_valid():
+                customer = form.save(commit=False)
+                customer.date_created = timezone.now()
+                customer.save()
+                return redirect('profile')
+        else:
+            form = CustomerForm(instance=customer)
+        return render(request, 'ecom/customerform.html', {'form': form})
+
+
+    else:
+        return redirect('login')
+
 
 def signup(request):
     if request.method == "POST":
@@ -148,8 +243,8 @@ def signup(request):
         else:
             return render (request,'accounts/signup.html', {'error':'Password does not match!'})
     else:
-        return render(request,'accounts/signup.html')
-
+        return render (request,'accounts/signup.html')
+        
 def login(request):
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'],password = request.POST['password'])
@@ -158,15 +253,31 @@ def login(request):
             return redirect('home')
         else:
             return render (request,'accounts/login.html', {'error':'Username or password is incorrect!'})
-
     else:
-        return render(request,'accounts/login.html')
+        return render (request,'accounts/login.html')
 
 def logout(request):
     if request.method == 'POST':
         logout(request)
     return redirect('login')
 
-def changepassword(request):
-    return render(request,'accounts/resetpassword.html')
     
+def changepassword(request):
+    if request.method == "POST":
+        if request.POST['passwordnew1'] == request.POST['passwordnew2']:
+            user = auth.authenticate(username=request.user, password = request.POST['passwordold'])
+            if user is not None:
+                user = User.objects.get(username=str(request.user))
+                user.set_password(str(request.POST['passwordnew1']))
+                user.save()
+                return redirect('login')
+
+            else:
+                return render (request,'accounts/resetpassword.html', {'error':'Oldpassword is incorrect!'})
+        else:
+            return render (request,'accounts/resetpassword.html', {'error':'Password does not match!'})
+    else:
+        return render (request,'accounts/resetpassword.html')
+
+
+

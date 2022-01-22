@@ -9,8 +9,8 @@ from django.conf import settings
 class Customer(models.Model):
     photo = models.ImageField(upload_to=settings.MEDIA_ROOT,blank=True)
     name = models.CharField(max_length=200, null=True,unique=True)
-    phone = models.CharField(max_length=200, blank=True)
-    email = models.CharField(max_length=200, blank=True)
+    phone = models.CharField(max_length=200, blank=True, null=True)
+    email = models.EmailField(blank=True,null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True) 
     
     def __str__(self):
@@ -58,8 +58,9 @@ class Order(models.Model):
         ('Out for delivery','Out for delivery'),
         ('Delivered','Delivered')
         )
-    cart = models.ForeignKey(Cart, null=True , on_delete= models.SET_NULL)
+    cart = models.ManyToManyField(Cart)
     payment_status = models.BooleanField(null=True)
+    date_ordered = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=200,null=True,choices=STATUS)
 
     def __str__(self):

@@ -4,21 +4,21 @@
 
 
 
-<div class = "loginclose">
+<div class = "loginclose card mb-4 box-shadow">
 <h1 class="head">Signup!</h1>
 
 <div class="body">
 <form method = "POST" action="{% url 'signup' %}">
     {% if error %}
-    <h2 style="color:orange;">{{ error }}</h2>
+    <h3 style="color:red;">{{ error }}</h3>
     {% endif %}
     {% csrf_token %}
     username:
-    <input type="text" name="username" placeholder="Enter Username" name="uname" required />
+    <input class="loginfield" type="text" name="username" placeholder="Enter Username" name="uname" required />
     Password:
-    <input type="password" name="password1" placeholder="Enter Password" name="psw" required/>
+    <input class="loginfield" type="password" name="password1" placeholder="Enter Password" name="psw" required/>
     confirm Password:
-    <input type="password" name="password2" placeholder="Enter Password again" name="psw" required/>
+    <input class="loginfield" type="password" name="password2" placeholder="Enter Password again" name="psw" required/>
     <input class ="btnlog" type="submit" value= "Sign up" />
 </form>
 <a href="{% url 'login'%}"><button class="btnlog">Login</button></a>
