@@ -1,17 +1,22 @@
 import imp
 from itertools import count, product
+from pyexpat.errors import messages
 from unicodedata import category
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.db.models import Q
+from django.urls import reverse
 from .models import*
 from .forms import*
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib.auth import logout, update_session_auth_hash
 from django.utils import timezone
-from payments import get_payment_model, RedirectNeeded
-from django.template.response import TemplateResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+from decimal import Decimal
+from django.views.generic import TemplateView
+
 # Create your views here.
 
 #ECOM
@@ -45,16 +50,20 @@ def productdetails(request,name):
 
 def search(request):
     if 'q' in request.GET and request.GET['q']:
+        products = Product.objects.all()
+        nested_list = seperaterowandcolumn(products)
         if str('q').isalnum:
             q = request.GET['q']
             products = Product.objects.filter(Q(name__contains=q)|Q(category__categoryname__contains=q))
             if len(products)<=0:
-                return redirect('home')
+                context = {'products':nested_list,'error':'Item not found!'}
+                return render (request,'ecom/search.html', context)
             nested_list = seperaterowandcolumn(products)
             context = {'products':nested_list}
             return render(request, 'ecom/search.html',context)
         else:
-            return redirect('home')
+            context = {'products':nested_list,'error':'Item not found!'}
+            return render (request,'ecom/search.html', context)
     else:
         return redirect('home')
 
@@ -63,10 +72,8 @@ def orders(request):
         Orders = Order.objects.all()
         orders = []
         for object in Orders:
-            if str(object.cart.customer.name) == str(request.user):
+            if str(object.customer.name) == str(request.user):
                 orders.append(object)
-            else:
-                return HttpResponse("This Failed")
                 
         return render(request,'ecom/orders.html',{'orders':orders, 'length':len(orders)})
     
@@ -113,8 +120,9 @@ def cart(request):
                 tp += cartobject.totalprice()
                 cartlist.append(cartobject)
         
+        length = len(cartlist)
         carts = seperaterowandcolumn(cartlist)
-        return render(request,'ecom/cart.html',{'carts':carts,'totalprice':tp})
+        return render(request,'ecom/cart.html',{'carts':carts,'totalprice':tp, 'length':length})
     else:
         return redirect('login')
 
@@ -193,26 +201,81 @@ def deleteproducts(request,pname):
     products.delete()
     return redirect('home')
 
-# PAYMENT
+# PAYMENT-------------------------------------------------------------------------------------------------------------------------------------
 
-# def payment(request):
-#     cust = Customer.objects.get(name=request.user)
-#     cart  = Cart.objects.filter(customer=cust)
-#     totalprice = 0;
-#     for i in cart:
-#         totalprice+=i.totalprice()
-#     return render(request,'ecom/payment.html',{"cart":cart,"totalprice":totalprice})
+def invoice(request,pk):
+    if request.user.is_authenticated:
+        order = Order.objects.get(pk=pk)
+        return render(request,'payments/invoice.html',{'order':order})
+
+    else:
+        return redirect('login')
 
 
-def payment(request, payment_id):
-    payment = get_object_or_404(get_payment_model(), id = payment_id)
-    try:
-        form = payment.get_form(data=request.POST or None)
-    except RedirectNeeded as redirect_to:
-        return redirect(str(redirect_to))
-    return TemplateResponse(request, 'ecom/payment.html',{'form': form, 'payment': payment})
 
-# ACCOUNTS
+def process_payment(request):
+    tp = 0
+    host = request.get_host()
+    if request.user.is_authenticated:
+        cart = Cart.objects.all()
+        cartlist = []
+        for cartobject in cart:
+            if str(cartobject.customer.name).strip() == str(request.user).strip():
+                tp += cartobject.totalprice()
+                cartlist.append(cartobject)
+
+        for products in cart:
+            paypal_dict = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': str(int(tp*0.013)),
+            'item_name': "products",
+            'invoice': 123456789,
+            'currency_code': 'USD',
+            'notify_url': 'http://{}{}'.format(host,reverse('paypal-ipn')),
+            'return_url': 'http://{}{}'.format(host,reverse('payment_done')),
+            'cancel_return': 'http://{}{}'.format(host,reverse('payment_cancelled')),
+            }
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        return render(request, 'payments/paypal_form.html', {'form': form})
+        
+        
+    else:
+        return redirect('login')
+
+
+@csrf_exempt
+def payment_done(request):
+    if request.user.is_authenticated:
+        cart = Cart.objects.all()
+        for cartobject in cart:
+            if str(cartobject.customer.name).strip() == str(request.user).strip():
+                b = Order(name=cartobject.product.name,product=cartobject.product,customer=cartobject.customer,totalprice=cartobject.totalprice(),count=cartobject.count,payment_status = True, status ='Pending')
+                b.save()
+                Cart.delete(cartobject)
+        return redirect('orders')
+    
+    else:
+        return redirect('login')
+
+
+
+@csrf_exempt
+def payment_canceled(request):
+    if request.user.is_authenticated:
+        cart = Cart.objects.all()
+        for cartobject in cart:
+            if str(cartobject.customer.name).strip() == str(request.user).strip():
+                b = Order(name=cartobject.product.name,product=cartobject.product,customer=cartobject.customer,totalprice=cartobject.totalprice(),count=cartobject.count,payment_status = False, status ='Pending')
+                b.save()
+                Cart.delete(cartobject)
+        return redirect('orders')
+    
+    else:
+        return redirect('login')
+
+
+
+# ACCOUNTS-----------------------------------------------------------------------------------------------------------------------------------
 
 def profile(request):
     if request.user.is_authenticated:

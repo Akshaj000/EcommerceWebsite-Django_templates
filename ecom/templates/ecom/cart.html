@@ -1,4 +1,6 @@
 {% extends 'ecom/base.html' %}
+
+{% block title %}Cart{% endblock %}
 {% block content %}
 
 <main role="main">
@@ -43,16 +45,21 @@
         {% endfor %}
       </div>
       {% endfor %}
+      {% if length > 0 %}
       <div class="list-group-item d-flex justify-content-between">
         <h4>Total price : </h4>
         <h3 style="color:green;"><strong>{{ totalprice }} INR</strong></h3>
       </div>
       <div class="list-group-item d-flex justify-content-between">
-        <a href="{% url 'payment' payment_id="123223" %}"><button type="button" class="btn btn-lg btn-outline-success updatecart">BUY NOW</button></a>
+        <a  href={% url 'process_payment' %}><button type="button" class="btn btn-lg btn-outline-success updatecart">CHECKOUT</button></a>
       </div>
+      {% else %}
+      <div class="container card box-shadow">
+        &nbsp;
+        <h3>&#128722; Cart is empty.</h3>
+        &nbsp;
+      </div>
+      {% endif %}
 
-          
-  
-  
   </main>
 {% endblock  %}

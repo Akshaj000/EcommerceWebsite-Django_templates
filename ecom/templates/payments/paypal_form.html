@@ -1,0 +1,14 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Make Payment{% endblock %}
+{% block content %}
+<br>
+<center>
+<div class="container card mb-5 box-shadow loginclose">
+    <h5>Pay with PayPal</h5>
+    {{ form.render }}
+</div>
+<div class="container card mb-5 box-shadow ">
+    {% include 'ecom/footer.html' %}
+</div>
+</center>
+{% endblock %}

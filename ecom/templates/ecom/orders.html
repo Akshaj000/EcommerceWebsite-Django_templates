@@ -1,5 +1,5 @@
 {% extends 'ecom/base.html' %}
-
+{% block title %}Orders{% endblock %}
 {% block content %}
 
 <br>
@@ -12,14 +12,17 @@
     {% for order in orders %}
     <li class="list-group-item d-flex justify-content-between lh-sm">
       <div>
-        <a href={% url 'productdetails' name=order.cart.product.name %}><h6 class="my-0">{{order.cart.product.name}}</h6></a>
+        <a href={% url 'invoice' pk=order.pk %}><h6 class="my-0">{{order.name}}</h6></a>
         <small class="text-muted"></small>
       </div>
-      <span class="text-muted">{{order.cart.product.price}} INR</span>
+      {% if order.payment_status %}
+      <span style="color:green;" >{{order.totalprice}} INR</span>
+      {% else %}
+      <span style="color:red;">{{order.totalprice}} INR</span>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
-  <a class="nav-link" href="{% url 'payment'%}"><button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Payment</button></a>
 </div>
 
 {% endblock content %}

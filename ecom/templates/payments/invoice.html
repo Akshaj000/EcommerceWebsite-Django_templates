@@ -1,0 +1,36 @@
+{% extends 'ecom/base.html' %}
+{% block content %}
+
+<br>
+<div class="container">
+<div class="card mb-4 box-shadow">
+    <div class="select2-container--classic">
+    <img class="card-img-top" src="{{ order.product.image.url }}" style="max-height:350px; width:auto; display: block; margin-left: auto; margin-right: auto; margin-top:10px" %>
+    </div>
+    <div class="card-body">
+      <h3 class="card-text">{{ order.product.name }}</h3>
+      <br>
+      <h2 class="card-text" style="color:green">{{ order.product.price }} INR</h2>
+      <h5 class="card-text">quantity  : {{ order.count }}x</h5>
+      <h5 class="card-text">Total : {{ order.totalprice }} INR</h5>
+      <h5 class="card-text">Ordered on : {{ order.date_ordered }}</h5>
+      <h5 class="card-text">Status : {{ order.status }}</h5>
+      {% if order.payment_status == True %}
+      <h4 style="color:green" class="card-text">Payment successful</h4>
+      {% else %}
+      <h4 style="color:red" class="card-text">Payment failed</h4>
+      {% endif %}
+      
+      
+
+      <br>
+      <p class ="card-text">{{ order.product.description }}</p>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

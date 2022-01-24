@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ecom.apps.EcomConfig',
-    'payments',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -125,7 +125,6 @@ STATIC_ROOT = 'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
 
-PAYMENT_HOST = 'localhost:8000'
-PAYMENT_USES_SSL = False
-PAYMENT_MODEL = 'mypaymentapp.Payment'
-PAYMENT_VARIANTS = {'default': ('payments.dummy.DummyProvider', {})}
+PAYPAL_RECEIVER_EMAIL = 'sb-c02ud12103226@business.example.com'
+
+PAYPAL_TEST = True

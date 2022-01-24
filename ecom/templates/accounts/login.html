@@ -1,7 +1,9 @@
 {% extends 'accounts/base.html' %}
+
+{% block title %}Login!{% endblock %}
 {% block content %}
 
-<div class="loginclose card mb-4 box-shadow">
+<div class="card mb-4 box-shadow loginclose ">
 <h1 class="head">Login!</h1>
 <div class ="body">
 <form method = "POST" action="{% url 'login' %}">
@@ -16,8 +18,9 @@
     <input class ="btnlog" type="submit" value= "Login" />
 </form>
 <a href="{% url 'signup'%}"><button class="btnlog">Sign up</button></a>
-</div>
-</div>
 
+<a class="nav-link px-2 text-muted" href="{% url 'home'%}">Home</a>
+</div>
+</div>
 
 {% endblock %}

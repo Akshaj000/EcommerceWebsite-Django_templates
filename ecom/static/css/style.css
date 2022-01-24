@@ -43,28 +43,25 @@
     margin-left: auto;
     margin-right: auto;
     width: 90%;
-    max-width: 400px;
+    max-width: 500px;
     height: auto;
-    padding: 30px;
-    background-color: wheat;
+    padding: 20px;
 }
 
 .btnlog {
     border-radius: 5px;
-    border: 2px solid #73ad2100;
-    font-family: Arial, Helvetica, sans-serif;
+    border: 1px groove #343a40;
+    margin-top: 5px;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.644);
-    background-color: #343a40;
+    color: rgb(0, 0, 0);
     padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
     width: 100%;
+    cursor: pointer;
 }
 
 .btnlog:hover {
-    opacity: 0.8;
+    background-color: #343a40;
+    color: white;
 }
 
 .logbody {
@@ -74,15 +71,13 @@
 }
 
 .loginfield {
-    border-radius: 0px;
-    border: 2px solid black;
     width: 100%;
-    padding: 12px 15px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border-color: black;
+    padding: 8px 12px;
+    margin: 4px 0;
     color: black;
     font-size: medium;
+    border-style: groove;
+    border-radius: 5px;
     background-color: white;
 }
 
@@ -92,7 +87,7 @@
 
 #profilepic {
     display: block;
-    margin: 50px;
+    margin: 30px;
     margin-left: auto;
     margin-right: auto;
     width: 300px;
@@ -114,15 +109,21 @@
 #id_category,
 #id_price,
 #id_image,
+#id_district,
 #id_photo,
+#id_postalcode,
+#id_address,
+#id_country,
+#id_state,
 #id_phone,
+#id_actname,
 #id_categoryname,
 #id_email {
     border-radius: 3px;
-    border: 2px groove #343a40;
+    border: 1px groove #343a40;
     width: 100%;
     padding: 12px 15px;
-    margin: 8px 0;
+    margin: 5px 0;
     box-sizing: border-box;
     font-size: medium;
     background-color: white;
@@ -133,7 +134,13 @@ label {
     font-family: 'Courier New', Courier, monospace;
 }
 
+#id_actname:hover,
+#id_country:hover,
+#id_district:hover,
+#id_postalcode:hover,
 #id_description:hover,
+#id_address:hover,
+#id_state:hover,
 #id_name:hover,
 #id_category :hover,
 #id_price:hover,

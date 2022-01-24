@@ -6,7 +6,9 @@
   <div class="album py-5 bg-light">
     <div class="container">
 
-
+    {% if error %}
+    <h3 style="color:red;">{{ error }}</h3>
+    {% endif %}
     {% for row in  products %}
     <div class="row">
       {% for products in row %}
