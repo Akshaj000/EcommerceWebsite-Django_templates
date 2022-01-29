@@ -39,9 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecom.apps.EcomConfig',
     'paypal.standard.ipn',
+    'ecomAPI.apps.EcomapiConfig',
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,3 +132,5 @@ MEDIA_ROOT = 'media'
 PAYPAL_RECEIVER_EMAIL = 'sb-c02ud12103226@business.example.com'
 
 PAYPAL_TEST = True
+
+CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
