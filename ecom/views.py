@@ -2,10 +2,12 @@ import imp
 from itertools import count, product
 from pyexpat.errors import messages
 from unicodedata import category
+from urllib import response
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.db.models import Q
 from django.urls import reverse
+from pkg_resources import NullProvider
 from .models import*
 from .forms import*
 from django.contrib.auth.models import User
@@ -72,9 +74,11 @@ def orders(request):
         Orders = Order.objects.all()
         orders = []
         for object in Orders:
-            if str(object.customer.name) == str(request.user):
-                orders.append(object)
-                
+            try:
+                if str(object.customer.name) == str(request.user):
+                    orders.append(object)
+            except:
+                continue
         return render(request,'ecom/orders.html',{'orders':orders, 'length':len(orders)})
     
     else:

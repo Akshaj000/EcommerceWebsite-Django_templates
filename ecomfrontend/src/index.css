@@ -1,0 +1,176 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.btn-large-view {
+    margin: 1px;
+    border-radius: 5px;
+    color: white;
+    border: #828583;
+    background-color: #909291c0;
+    background-image: linear-gradient(180deg, rgba(81, 255, 0, 0), rgba(13, 197, 68, 0.116));
+    cursor: pointer;
+}
+
+.btn-large-buy {
+    margin: 1px;
+    border-radius: 5px;
+    color: white;
+    border: #08c2f0;
+    background-color: #17a2b8;
+    background-image: linear-gradient(180deg, rgba(81, 255, 0, 0), rgba(13, 197, 68, 0.116));
+    cursor: pointer;
+}
+
+.btn-large-buy:hover {
+    background-color: #07c3e0;
+    border: #08c2f0;
+}
+
+.btn-large-view:hover {
+    background-color: #cacaca;
+    border: #5f6664;
+}
+
+.btn-small {
+    margin: 1px;
+    border-radius: 10%;
+    border: #828583;
+}
+
+.loginclose {
+    font-family: 'Courier New', Courier, monospace;
+    border: 2px solid #343a40;
+    margin: 11%;
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    padding: 20px;
+}
+
+.btnlog {
+    border-radius: 5px;
+    border: 1px groove #343a40;
+    margin-top: 5px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    padding: 14px 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btnlog:hover {
+    background-color: #343a40;
+    color: white;
+}
+
+.logbody {
+    display: inline;
+    background-size: 100%;
+    background-color: #343a40;
+}
+
+.loginfield {
+    width: 100%;
+    padding: 8px 12px;
+    margin: 4px 0;
+    color: black;
+    font-size: medium;
+    border-style: groove;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.loginfield:hover {
+    background-color: rgba(0, 0, 0, 0.061);
+}
+
+#profilepic {
+    display: block;
+    margin: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 300px;
+    max-width: 500px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.textp {
+    text-align: left;
+    padding: 3px;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#id_description,
+#id_name,
+#id_category,
+#id_price,
+#id_image,
+#id_district,
+#id_photo,
+#id_postalcode,
+#id_address,
+#id_country,
+#id_state,
+#id_phone,
+#id_actname,
+#id_categoryname,
+#id_email {
+    border-radius: 3px;
+    border: 1px groove #343a40;
+    width: 100%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    font-size: medium;
+    background-color: white;
+}
+
+label {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#id_actname:hover,
+#id_country:hover,
+#id_district:hover,
+#id_postalcode:hover,
+#id_description:hover,
+#id_address:hover,
+#id_state:hover,
+#id_name:hover,
+#id_category :hover,
+#id_price:hover,
+#id_image:hover {
+    background-color: rgba(0, 0, 0, 0.061);
+}
+
+.formclose {
+    font-family: 'Courier New', Courier, monospace;
+    border: 2px solid #73ad2100;
+    margin: 1%;
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1500px;
+    height: auto;
+    color: black;
+    padding: 30px;
+    background-color: wheat;
+}
