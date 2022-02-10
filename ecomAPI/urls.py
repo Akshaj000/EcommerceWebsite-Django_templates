@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from .import views
+from rest_framework.authtoken import views as authview
+
 
 urlpatterns = [
     path('', views.apiOverview,name="api-overview"),
@@ -31,5 +33,8 @@ urlpatterns = [
     path('order-add/',views.addOrder,name="order-add"),
     path('order-remove/<int:orderid>/',views.removeOrder,name="order-remove"),
     path('order-update/<int:orderid>/',views.updateOrder,name="order-update"),
+
+    path('auth-token/',views.authentication_view,name="Authenticate"),
+    path('api-token-auth/', authview.obtain_auth_token),
 
 ]

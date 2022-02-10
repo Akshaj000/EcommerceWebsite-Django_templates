@@ -1,9 +1,16 @@
 from urllib import request
 from django.shortcuts import render
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.decorators import authentication_classes
+from django.db.models.signals import post_save
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from django.dispatch import receiver 
 from urllib3 import Retry
 from ecom.models import*
 from .serializers import*
@@ -39,6 +46,7 @@ def apiOverview(request):
             'Place Order' : '/order-add/',
             'Delete Order' : '/order-remove/<str:orderid>/',
             'Update Order' : '/order-update/<str:orderid>/',
+            'Authenticate Token' : '/auth-token/',
             
         } 
         return Response(api_urls)
@@ -347,3 +355,14 @@ def updateOrder(request,orderid):
             return redirect('home')
     else:
         return redirect('login')
+
+#Authentication------------------------------------
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def authentication_view(request, format=None):
+    content = {
+        'user': str(request.user),  
+        'auth': str(request.auth),  
+    }
+    return Response(content)
