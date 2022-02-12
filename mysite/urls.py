@@ -24,4 +24,5 @@ urlpatterns = [
     path('',include('ecom.urls')),
     path('api/',include('ecomAPI.urls')),
     path('paypal/', include('paypal.standard.ipn.urls')),
+    path('core/', include('core.urls')),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

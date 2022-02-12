@@ -34,7 +34,4 @@ urlpatterns = [
     path('order-remove/<int:orderid>/',views.removeOrder,name="order-remove"),
     path('order-update/<int:orderid>/',views.updateOrder,name="order-update"),
 
-    path('auth-token/',views.authentication_view,name="Authenticate"),
-    path('api-token-auth/', authview.obtain_auth_token),
-
 ]

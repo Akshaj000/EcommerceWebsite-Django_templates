@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
+    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -138,10 +139,6 @@ PAYPAL_TEST = True
 
 CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ]
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'mysite.utils.my_jwt_response_handler'
 }
