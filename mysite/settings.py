@@ -29,6 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,11 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecom.apps.EcomConfig',
     'paypal.standard.ipn',
-    'ecomAPI.apps.EcomapiConfig',
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
-    'core.apps.CoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -139,6 +139,12 @@ PAYPAL_TEST = True
 
 CORS_ORIGIN_WHITELIST = ("http://localhost:3000",)
 
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'mysite.utils.my_jwt_response_handler'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
